@@ -8,7 +8,7 @@ const Otsikko = (props) => {
 
 const Osa = ({content}) => {
   return (
-    <li>{content.nimi} {content.tehtavia}</li>
+    <p>{content.nimi} {content.tehtavia}</p>
   )
 
     
@@ -16,17 +16,17 @@ const Osa = ({content}) => {
 
 const Sisalto = ({contents}) => {
   return (
-    <div>
-       <ul>
+    <div>       
         {contents.map(content => <Osa key={content.id} content={content} />)}
-      </ul>
     </div>
   )
 }
 
-const Yhteensa = (props) => {
+const Yhteensa = ({contents}) => {
+  const reducerSum = (acc, cur) => acc + cur.tehtavia 
+  const summedExcersises = contents.reduce(reducerSum, 0) 
   return (
-    <p>yhteensä {props.sum_excercise[0].tehtavia + props.sum_excercise[1].tehtavia + props.sum_excercise[2].tehtavia} tehtävää</p>
+    <p>yhteensä {summedExcersises}</p>
   )
 
     
@@ -38,6 +38,7 @@ const Kurssi = ({kurssi}) => {
     <div>
       <Otsikko course={kurssi.nimi}/>
       <Sisalto contents={kurssi.osat}/>
+      <Yhteensa contents={kurssi.osat}/>
     </div>
   )
 
