@@ -13,6 +13,11 @@ class App extends React.Component {
 
   addNote = (event) => {
     event.preventDefault()
+
+    const isNameUnique = this.state.persons.find(person => person.name === this.state.newName) 
+     //Undefined evaluates to false 
+    if(!isNameUnique) {
+
     const newPerson = {
       name: this.state.newName
     }
@@ -24,6 +29,11 @@ class App extends React.Component {
       persons: newPersons,
       newName: ''
     })
+    } else {
+      this.setState({
+        newName: ''
+      })
+    }
 
     console.log("persoonat", this.state.persons)
   }
@@ -50,8 +60,9 @@ class App extends React.Component {
         </form>
         <h2>Numerot</h2>
         <div>
-        {this.state.persons.map(person => <li key={person.name}> {person.name} </li>)}
-
+          <ul>
+              {this.state.persons.map(person => <li key={person.name}>{person.name}</li>)}
+          </ul> 
         </div> 
       </div>
     )
