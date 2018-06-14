@@ -5,11 +5,15 @@ class App extends React.Component {
     super(props)
     this.state = {
       persons: [
-        { name: 'Arto Hellas',
-          number :'040-123456'}
+        { name: 'Arto Hellas', number :'040-123456'},
+        { name: 'Pentti Linkola', number :'123-456789'},
+        { name: 'Esa Saarinen', number :'353-555555'},
+        { name: 'Esa Esala', number :'353-555555'},
+        { name: 'Ari Esala', number :'353-555222'}
       ],
       newName: '',
-      newNumber: ''
+      newNumber: '',
+      newMatchedName: ''
     }
   }
 
@@ -53,10 +57,28 @@ class App extends React.Component {
     this.setState({ newNumber: event.target.value })
   }
 
+  handleNameMatch = (event) => {
+    console.log(event.target.value)
+    this.setState({ newMatchedName: event.target.value})
+  }
+
   render() {
+    
+    const showPhoneNumbers = this.state.persons.filter(
+      person => person.name.toLowerCase().includes(this.state.newMatchedName.toLowerCase()))
+
     return (
       <div>
         <h2>Puhelinluettelo</h2>
+          <div>
+          <div>
+            rajaa näytettävä: <input 
+                    value={this.state.newMatchedName}
+                    onChange={this.handleNameMatch}
+                     />
+          </div>
+          <h3>Lisää uusi</h3>
+          </div>
         <form onSubmit={this.addNote}>
           <div>
             nimi: <input 
@@ -65,7 +87,7 @@ class App extends React.Component {
                      />
           </div>
           <div>
-            nimi: <input 
+            numero: <input 
                     value={this.state.newNumber}
                     onChange={this.handleNumberChange}
                      />
@@ -74,10 +96,10 @@ class App extends React.Component {
             <button type="submit">lisää</button>
           </div>
         </form>
-        <h2>Numerot</h2>
+        <h3>Numerot</h3>
         <div>
           <ul>
-              {this.state.persons.map(person => <li key={person.name}>{person.name} {person.number}</li>)}
+              {showPhoneNumbers.map(person => <li key={person.name}>{person.name} {person.number}</li>)}
           </ul> 
         </div> 
       </div>
