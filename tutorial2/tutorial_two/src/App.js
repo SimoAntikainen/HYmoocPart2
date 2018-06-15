@@ -1,17 +1,30 @@
 import React from 'react'
 import Note from './components/Note'
+import axios from 'axios'
 
 class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      notes: props.notes,
+      notes: [],
       newNote: 'uusi muistiinpano...',
       showAll: true
     }
+    console.log('constructor')
   }
 
-  addNote = (event) => {
+  componentDidMount() {
+    console.log('did mount')
+    axios
+      .get('http://localhost:3001/notes')
+      .then(response => {
+        console.log('promise fulfilled')
+        this.setState({ notes: response.data })
+      })
+  }
+  
+
+  /**addNote = (event) => {
     event.preventDefault()
     const noteObject = {
       content: this.state.newNote,
@@ -26,6 +39,24 @@ class App extends React.Component {
       notes: notes,
       newNote: ''
     })
+  }**/
+
+  addNote = (event) => {
+    event.preventDefault()
+    const noteObject = {
+      content: this.state.newNote,
+      date: new Date(),
+      important: Math.random() > 0.5
+    }
+  
+    axios
+    .post('http://localhost:3001/notes', noteObject)
+    .then(response => {
+      this.setState({
+        notes: this.state.notes.concat(response.data),
+        newNote: ''
+      })
+    })
   }
 
   handleNoteChange = (event) => {
@@ -39,6 +70,7 @@ class App extends React.Component {
   }
 
   render() {
+    console.log('render')
 
     const notesToShow =
     this.state.showAll ?

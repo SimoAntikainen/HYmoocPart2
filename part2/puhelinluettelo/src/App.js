@@ -1,23 +1,38 @@
 import React from 'react';
 import Henkilotieto from './components/Henkilotieto'
 import FilterLomake from './components/FilterLomake'
-import SubmitLomake from './components/SubmitLomake';
+import SubmitLomake from './components/SubmitLomake'
+
+import axios from 'axios'
 
 class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+
+      /** 
       persons: [
         { name: 'Arto Hellas', number :'040-123456'},
         { name: 'Pentti Linkola', number :'123-456789'},
         { name: 'Esa Saarinen', number :'353-555555'},
         { name: 'Esa Esala', number :'353-555555'},
         { name: 'Ari Esala', number :'353-555222'}
-      ],
+      ],**/
+      persons: [],
       newName: '',
       newNumber: '',
       newMatchedName: ''
     }
+  }
+
+  componentDidMount() {
+    console.log('did mount')
+    axios
+      .get('http://localhost:3001/persons')
+      .then(response => {
+        console.log('promise fulfilled')
+        this.setState({ persons: response.data })
+      })
   }
 
   addNote = (event) => {
