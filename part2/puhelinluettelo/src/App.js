@@ -1,4 +1,5 @@
 import React from 'react';
+import Henkilotieto from './components/Henkilotieto'
 
 class App extends React.Component {
   constructor(props) {
@@ -98,9 +99,11 @@ class App extends React.Component {
         </form>
         <h3>Numerot</h3>
         <div>
-          <ul>
-              {showPhoneNumbers.map(person => <li key={person.name}>{person.name} {person.number}</li>)}
-          </ul> 
+          <table>
+            <tbody>
+              {showPhoneNumbers.map(person => <Henkilotieto key={person.name} name={person.name} number={person.number}/>)}
+            </tbody>
+          </table> 
         </div> 
       </div>
     )
