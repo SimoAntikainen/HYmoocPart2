@@ -1,5 +1,7 @@
 import React from 'react';
 import Henkilotieto from './components/Henkilotieto'
+import FilterLomake from './components/FilterLomake'
+import SubmitLomake from './components/SubmitLomake';
 
 class App extends React.Component {
   constructor(props) {
@@ -72,31 +74,13 @@ class App extends React.Component {
       <div>
         <h2>Puhelinluettelo</h2>
           <div>
-          <div>
-            rajaa näytettävä: <input 
-                    value={this.state.newMatchedName}
-                    onChange={this.handleNameMatch}
-                     />
+            <FilterLomake value={this.state.newMatchedName}
+                    onChange={this.handleNameMatch}/>
+            <h3>Lisää uusi</h3>
           </div>
-          <h3>Lisää uusi</h3>
-          </div>
-        <form onSubmit={this.addNote}>
-          <div>
-            nimi: <input 
-                    value={this.state.newName}
-                    onChange={this.handleNameChange}
-                     />
-          </div>
-          <div>
-            numero: <input 
-                    value={this.state.newNumber}
-                    onChange={this.handleNumberChange}
-                     />
-          </div>
-          <div>
-            <button type="submit">lisää</button>
-          </div>
-        </form>
+          <SubmitLomake onSubmit={this.addNote} 
+            value1={this.state.newName} onChange1={this.handleNameChange} 
+            value2={this.state.newNumber} onChange2={this.handleNumberChange}/>
         <h3>Numerot</h3>
         <div>
           <table>
