@@ -3,10 +3,7 @@ import Henkilotieto from './components/Henkilotieto'
 import FilterLomake from './components/FilterLomake'
 import SubmitLomake from './components/SubmitLomake'
 
-import axios from 'axios'
-
 import personService from './services/persons'
-import persons from './services/persons';
 
 class App extends React.Component {
   constructor(props) {
@@ -92,7 +89,7 @@ class App extends React.Component {
 
   changeNumber = () => {
     const person = this.state.persons.find(person => person.name === this.state.newName)
-    if(window.confirm(` ${person.name} jo luettelossa, korvataanko numero uudella`)) {
+    if(window.confirm(` ${person.name} jo luettelossa, korvataanko numero uudella?`)) {
     
     const changedPerson = { ...person, number: this.state.newNumber}
     const idOfChangedPerson = person.id
