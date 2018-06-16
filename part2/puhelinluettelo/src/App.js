@@ -77,20 +77,19 @@ class App extends React.Component {
 
   removePerson = (id) => {
     return () => {
+      if(window.confirm(`Haluatko poistaa ${this.state.persons.find(n => n.id === id).name}`)) {
       console.log('remove '+id+'')
-      const url = `http://localhost:3001/persons/${id}`
       const person = this.state.persons.find(n => n.id === id)
       const changedPerson = { ...person}
       console.log('changed note ',changedPerson)
       
       personService.removePerson(id, changedPerson)
         .then(response => {
-          //console.log(response)
           this.setState({
           persons: this.state.persons.filter(person => person.id != id)
           })
-      })
-
+        })
+      }
     }  
   }
 
