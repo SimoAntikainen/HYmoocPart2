@@ -4,13 +4,13 @@
       "id": 1,
       "content": "HTML on helppoa",
       "date": "2017-12-10T17:30:31.098Z",
-      "important": false
+      "important": true
     },
     {
       "id": 2,
       "content": "Selain pystyy suorittamaan vain javascriptiä",
       "date": "2017-12-10T18:39:34.091Z",
-      "important": false
+      "important": true
     },
     {
       "id": 3,
@@ -21,7 +21,7 @@
     {
       "content": "Show hei hei",
       "date": "2018-06-15T20:06:38.607Z",
-      "important": false,
+      "important": true,
       "id": 4
     },
     {
@@ -33,7 +33,7 @@
     {
       "content": "uusi muistiinpandasdsao...",
       "date": "2018-06-16T12:23:12.644Z",
-      "important": true,
+      "important": false,
       "id": 6
     },
     {
@@ -57,8 +57,14 @@
     {
       "content": "uusi muistiinpano...ada",
       "date": "2018-06-16T13:30:17.753Z",
-      "important": false,
+      "important": true,
       "id": 10
+    },
+    {
+      "content": "uusi muistiinpano...dwd",
+      "date": "2018-06-16T19:26:35.641Z",
+      "important": false,
+      "id": 11
     }
   ]
 }
