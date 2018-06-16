@@ -65,10 +65,7 @@ class App extends React.Component {
     })
 
     } else {
-      this.setState({
-        newName: '',
-        newNumber: ''
-      })
+      this.changeNumber()
     }
 
     console.log("persoonat", this.state.persons)
@@ -91,6 +88,26 @@ class App extends React.Component {
         })
       }
     }  
+  }
+
+  changeNumber = () => {
+    const person = this.state.persons.find(person => person.name === this.state.newName)
+    if(window.confirm(` ${person.name} jo luettelossa, korvataanko numero uudella`)) {
+    
+    const changedPerson = { ...person, number: this.state.newNumber}
+    const idOfChangedPerson = person.id
+
+    personService.changePersonNumber(idOfChangedPerson, changedPerson)
+      .then(response => {
+        console.log("response", response)
+        this.setState({
+          persons: this.state.persons.map(person => person.id !== idOfChangedPerson ? person : response.data),
+          newName: '',
+          newNumber: ''
+        })
+      })
+    }
+    
   }
 
   handleNameChange = (event) => {
