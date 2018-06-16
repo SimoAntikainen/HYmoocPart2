@@ -5,6 +5,9 @@ import SubmitLomake from './components/SubmitLomake'
 
 import axios from 'axios'
 
+import personService from './services/persons'
+import persons from './services/persons';
+
 class App extends React.Component {
   constructor(props) {
     super(props)
@@ -27,15 +30,20 @@ class App extends React.Component {
 
   componentDidMount() {
     console.log('did mount')
-    axios
+    /**axios
       .get('http://localhost:3001/persons')
       .then(response => {
         console.log('promise fulfilled')
         this.setState({ persons: response.data })
+      })**/
+      personService.getAllPersons().then(response => {
+        console.log('promise fulfilled')
+        this.setState({ persons: response.data })
       })
+
   }
 
-  addNote = (event) => {
+  addPerson = (event) => {
     event.preventDefault()
 
     const isNameUnique = this.state.persons.find(person => person.name === this.state.newName) 
@@ -48,23 +56,13 @@ class App extends React.Component {
     }
     console.log("newPerson", newPerson)
 
-    axios.post('http://localhost:3001/persons', newPerson)
-    .then(response => {
-      //console.log(response)
+    personService.createPerson(newPerson).then(response => {
       this.setState({
         persons: this.state.persons.concat(response.data),
         newName: '',
         newNumber: ''
       })
     })
-  
-    /**const newPersons = this.state.persons.concat(newPerson)
-  
-    this.setState({
-      persons: newPersons,
-      newName: '',
-      newNumber: ''
-    })**/
 
     } else {
       this.setState({
@@ -74,6 +72,26 @@ class App extends React.Component {
     }
 
     console.log("persoonat", this.state.persons)
+  }
+
+
+  removePerson = (id) => {
+    return () => {
+      console.log('remove '+id+'')
+      const url = `http://localhost:3001/persons/${id}`
+      const person = this.state.persons.find(n => n.id === id)
+      const changedPerson = { ...person}
+      console.log('changed note ',changedPerson)
+      
+      personService.removePerson(id, changedPerson)
+        .then(response => {
+          //console.log(response)
+          this.setState({
+          persons: this.state.persons.filter(person => person.id != id)
+          })
+      })
+
+    }  
   }
 
   handleNameChange = (event) => {
@@ -104,14 +122,15 @@ class App extends React.Component {
                     onChange={this.handleNameMatch}/>
             <h3>Lisää uusi</h3>
           </div>
-          <SubmitLomake onSubmit={this.addNote} 
+          <SubmitLomake onSubmit={this.addPerson} 
             value1={this.state.newName} onChange1={this.handleNameChange} 
             value2={this.state.newNumber} onChange2={this.handleNumberChange}/>
         <h3>Numerot</h3>
         <div>
           <table>
             <tbody>
-              {showPhoneNumbers.map(person => <Henkilotieto key={person.name} name={person.name} number={person.number}/>)}
+              {showPhoneNumbers.map(person => <Henkilotieto key={person.id} 
+                name={person.name} number={person.number} remove={this.removePerson(person.id)}/>)}
             </tbody>
           </table> 
         </div> 
