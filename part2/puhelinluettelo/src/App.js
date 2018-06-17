@@ -4,6 +4,33 @@ import FilterLomake from './components/FilterLomake'
 import SubmitLomake from './components/SubmitLomake'
 
 import personService from './services/persons'
+import './index.css'
+
+const Notification = ({ message, status }) => {
+  console.log("Here", status)
+  switch(status) {
+    case 'success':
+      return (
+        <div className="success">
+          {message}
+        </div>
+    )
+    case 'removal':
+      return (
+        <div className="removal">
+          {message}
+        </div>
+    )
+    case 'change':
+      return (
+        <div className="change">
+          {message}
+        </div>
+    )
+    default: 
+      return null
+  }
+}
 
 class App extends React.Component {
   constructor(props) {
@@ -21,7 +48,9 @@ class App extends React.Component {
       persons: [],
       newName: '',
       newNumber: '',
-      newMatchedName: ''
+      newMatchedName: '',
+      operationMessage: null,
+      operation: null
     }
   }
 
@@ -57,8 +86,13 @@ class App extends React.Component {
       this.setState({
         persons: this.state.persons.concat(response.data),
         newName: '',
-        newNumber: ''
+        newNumber: '',
+        operationMessage: `Lisättiin ${response.data.name}`,
+        operation: 'success'
       })
+      setTimeout(() => {
+        this.setState({operationMessage: null, operation: null})
+      }, 4000)
     })
 
     } else {
@@ -72,16 +106,21 @@ class App extends React.Component {
   removePerson = (id) => {
     return () => {
       if(window.confirm(`Haluatko poistaa ${this.state.persons.find(n => n.id === id).name}`)) {
-      console.log('remove '+id+'')
+      //console.log('remove '+id+'')
       const person = this.state.persons.find(n => n.id === id)
       const changedPerson = { ...person}
-      console.log('changed note ',changedPerson)
+      //console.log('changed note ',changedPerson)
       
       personService.removePerson(id, changedPerson)
         .then(response => {
           this.setState({
-          persons: this.state.persons.filter(person => person.id != id)
+          persons: this.state.persons.filter(person => person.id != id),
+          operationMessage: `poistettiin ${changedPerson.name}`,
+          operation: 'removal'
           })
+          setTimeout(() => {
+            this.setState({operationMessage: null, operation: null})
+          }, 4000)
         })
       }
     }  
@@ -100,8 +139,13 @@ class App extends React.Component {
         this.setState({
           persons: this.state.persons.map(person => person.id !== idOfChangedPerson ? person : response.data),
           newName: '',
-          newNumber: ''
+          newNumber: '',
+          operationMessage: `muutettiin ${response.data.name} numero`,
+          operation: 'change'
         })
+        setTimeout(() => {
+          this.setState({operationMessage: null, operation: null})
+        }, 4000)
       })
     }
     
@@ -130,6 +174,7 @@ class App extends React.Component {
     return (
       <div>
         <h2>Puhelinluettelo</h2>
+        <Notification message={this.state.operationMessage} status={this.state.operation}/>
           <div>
             <FilterLomake value={this.state.newMatchedName}
                     onChange={this.handleNameMatch}/>
