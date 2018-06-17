@@ -36,15 +36,6 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-
-      /** 
-      persons: [
-        { name: 'Arto Hellas', number :'040-123456'},
-        { name: 'Pentti Linkola', number :'123-456789'},
-        { name: 'Esa Saarinen', number :'353-555555'},
-        { name: 'Esa Esala', number :'353-555555'},
-        { name: 'Ari Esala', number :'353-555222'}
-      ],**/
       persons: [],
       newName: '',
       newNumber: '',
@@ -55,15 +46,10 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    console.log('did mount')
-    /**axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        console.log('promise fulfilled')
-        this.setState({ persons: response.data })
-      })**/
+    //console.log('did mount')
+    
       personService.getAllPersons().then(response => {
-        console.log('promise fulfilled')
+        console.log('promise fulfilled', response)
         this.setState({ persons: response.data })
       })
 
@@ -80,7 +66,7 @@ class App extends React.Component {
       name: this.state.newName,
       number: this.state.newNumber
     }
-    console.log("newPerson", newPerson)
+    //console.log("newPerson", newPerson)
 
     personService.createPerson(newPerson).then(response => {
       this.setState({
@@ -96,10 +82,10 @@ class App extends React.Component {
     })
 
     } else {
-      this.changeNumber()
+      this.changeNumber(event)
     }
 
-    console.log("persoonat", this.state.persons)
+    //console.log("persoonat", this.state.persons)
   }
 
 
@@ -126,7 +112,7 @@ class App extends React.Component {
     }  
   }
 
-  changeNumber = () => {
+  changeNumber = (event) => {
     const person = this.state.persons.find(person => person.name === this.state.newName)
     if(window.confirm(` ${person.name} jo luettelossa, korvataanko numero uudella?`)) {
     
@@ -135,7 +121,7 @@ class App extends React.Component {
 
     personService.changePersonNumber(idOfChangedPerson, changedPerson)
       .then(response => {
-        console.log("response", response)
+        //console.log("response", response)
         this.setState({
           persons: this.state.persons.map(person => person.id !== idOfChangedPerson ? person : response.data),
           newName: '',
@@ -147,22 +133,54 @@ class App extends React.Component {
           this.setState({operationMessage: null, operation: null})
         }, 4000)
       })
+      .catch(error => {
+        this.addRemoved()       
+      })
+    }  
+  }
+  /**
+   * The error case in 2.19 is handled by adding the crediantants
+   * back to the database and by retrieving all the entiries
+   * from the database.
+   */
+
+  addRemoved = () => {
+    //console.log("laaaaaaaaa")
+    const newPerson = {
+      name: this.state.newName,
+      number: this.state.newNumber
     }
-    
+    //console.log("newPerson", newPerson)
+
+    personService.createPerson(newPerson).then(response => {
+      this.setState({
+        persons: this.state.persons.concat(response.data),
+        newName: '',
+        newNumber: '',
+        operationMessage: `Lisättiin ${response.data.name}`,
+        operation: 'success'
+      })
+      setTimeout(() => {
+        this.setState({operationMessage: null, operation: null})
+      }, 4000)
+    }).then(response => {this.componentDidMount()} )
+    //console.log("laaaaaaaaa")
   }
 
+
+
   handleNameChange = (event) => {
-    console.log(event.target.value)
+    //console.log(event.target.value)
     this.setState({ newName: event.target.value })
   }
 
   handleNumberChange = (event) => {
-    console.log(event.target.value)
+    //console.log(event.target.value)
     this.setState({ newNumber: event.target.value })
   }
 
   handleNameMatch = (event) => {
-    console.log(event.target.value)
+    //console.log(event.target.value)
     this.setState({ newMatchedName: event.target.value})
   }
 

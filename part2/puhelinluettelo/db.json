@@ -1,139 +1,24 @@
 {
   "persons": [
     {
-      "name": "matti",
-      "number": "2222",
-      "id": 10
+      "name": "Arto Hellas",
+      "number": "040-123456",
+      "id": 1
     },
     {
-      "name": "f",
-      "number": "3213213",
-      "id": 11
+      "name": "Martti Tienari",
+      "number": "040-123456",
+      "id": 2
     },
     {
-      "name": "dasd",
-      "number": "22",
-      "id": 12
+      "name": "Arto Järvinen",
+      "number": "040-123456",
+      "id": 3
     },
     {
-      "name": "dasdsa",
-      "number": "21323",
-      "id": 14
-    },
-    {
-      "name": "dadadaad",
-      "number": "21211",
-      "id": 15
-    },
-    {
-      "name": "sferr",
-      "number": "1313",
-      "id": 17
-    },
-    {
-      "name": "AAA",
-      "number": "3232",
-      "id": 19
-    },
-    {
-      "name": "dadsa",
-      "number": "2122",
-      "id": 21
-    },
-    {
-      "name": "assaa",
-      "number": "1212121",
-      "id": 22
-    },
-    {
-      "name": "asdas",
-      "number": "222",
-      "id": 23
-    },
-    {
-      "name": "dsadsad",
-      "number": "222",
-      "id": 25
-    },
-    {
-      "name": "assssssss",
-      "number": "2222",
-      "id": 26
-    },
-    {
-      "name": "dsa",
-      "number": "2",
-      "id": 27
-    },
-    {
-      "name": "a",
-      "number": "22",
-      "id": 28
-    },
-    {
-      "name": "asda",
-      "number": "33",
-      "id": 29
-    },
-    {
-      "name": "dsad",
-      "number": "2222",
-      "id": 30
-    },
-    {
-      "name": "asaaaaaaa",
-      "number": "222",
-      "id": 31
-    },
-    {
-      "name": "dasdsd",
-      "number": "2222",
-      "id": 32
-    },
-    {
-      "name": "adadadad",
-      "number": "222",
-      "id": 33
-    },
-    {
-      "name": "assad",
-      "number": "222",
-      "id": 34
-    },
-    {
-      "name": "assa",
-      "number": "223",
-      "id": 35
-    },
-    {
-      "name": "ss",
-      "number": "2223",
-      "id": 36
-    },
-    {
-      "name": "sas",
-      "number": "2333",
-      "id": 37
-    },
-    {
-      "name": "ggrgr",
-      "number": "323",
-      "id": 38
-    },
-    {
-      "name": "fggfggg",
-      "number": "233",
-      "id": 39
-    },
-    {
-      "name": "as",
-      "number": "223",
-      "id": 40
-    },
-    {
-      "name": "fgegrg",
-      "number": "33",
-      "id": 41
+      "name": "Lea Kutvonen",
+      "number": "040-123456",
+      "id": 4
     }
   ]
 }
