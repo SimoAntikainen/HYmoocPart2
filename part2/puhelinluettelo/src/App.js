@@ -154,7 +154,6 @@ class App extends React.Component {
 
     personService.createPerson(newPerson).then(response => {
       this.setState({
-        persons: this.state.persons.concat(response.data),
         newName: '',
         newNumber: '',
         operationMessage: `Lisättiin ${response.data.name}`,
