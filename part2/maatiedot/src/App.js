@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios'
 
-const CountryInfo = ({countries}) => {
+const CountryInfo = ({countries, goToCountry}) => {
   const len = countries.length
   
   
@@ -17,7 +17,12 @@ const CountryInfo = ({countries}) => {
         <div>
           {
             countries.map(country => 
-            <div key={country.name}>{country.name}</div>)
+              <div key={country.name}
+              onClick={goToCountry(country.name)}
+              >
+                {country.name}
+              </div>
+            )
           }
         </div>
     )
@@ -72,6 +77,15 @@ class App extends React.Component {
     this.setState({ search: event.target.value })
   }
 
+  goToCountry = (country) => {
+    return() => {
+      //console.log("HERE", country)
+      this.setState({search: country})
+
+    }
+
+  }
+
   render() {
     const countriesToShow = this.state.countries.filter(
       country => country.name.toLowerCase()
@@ -87,7 +101,7 @@ class App extends React.Component {
           </div>
         </form>
         <div>
-        <CountryInfo countries={countriesToShow}/>
+        <CountryInfo countries={countriesToShow} goToCountry={this.goToCountry}/>
         </div>
             
       </div>
