@@ -1,45 +1,95 @@
 import React from 'react';
 import axios from 'axios'
 
+const CountryInfo = ({countries}) => {
+  const len = countries.length
+  
+  
+  if (len > 10) {
+      return (
+        <div>
+          {"Liikaa maita, rajaa hakuehdot paremmin"}
+        </div>
+    )
+  }
+  else if (len <= 10 && len > 1) {
+      return (
+        <div>
+          {
+            countries.map(country => 
+            <div key={country.name}>{country.name}</div>)
+          }
+        </div>
+    )
+  }
+  else if(len === 1) {
+    return (
+      <div>
+        <div>
+        <h1>{countries[0].name}</h1>
+        </div>
+        <div>
+          {"capital: " + countries[0].capital + ""}
+        </div>
+        <div>
+          {"population: " + countries[0].population + ""}
+        </div>
+        <div>
+          <img src={countries[0].flag} alt={"Flag of " + countries[0].name + ""} 
+          width="300" height="175"/>
+        </div>
+
+      </div>
+      )
+
+  } else {
+    return (
+    <div>
+      {"Ei ehdot täyttäviä maita"}
+    </div>
+    )
+  }
+
+}
 
 class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      countries: []
+      countries: [],
+      search: ''
     }
   }
 
   componentDidMount() {
-    console.log('did mount')
-    
     axios.get('https://restcountries.eu/rest/v2/all')
       .then(response => {
-        console.log('all countries retrieved')
         this.setState({ countries: response.data })
       })
   }
 
+  handleSearchChange = (event) => {
+    this.setState({ search: event.target.value })
+  }
+
   render() {
-    const countriesToShow = this.state.countries
+    const countriesToShow = this.state.countries.filter(
+      country => country.name.toLowerCase()
+      .includes(this.state.search.toLowerCase()))
 
     return (
       <div>
         <form>
           <div>
-            Hae maita: <input />
-          </div>
-          <div>
-            <button type="submit">lisää</button>
+            Hae maita: <input 
+              value={this.state.search} 
+              onChange={this.handleSearchChange}/>
           </div>
         </form>
-        <ul>
-          {
-            countriesToShow.map(country => 
-            <li key={country.name}>{country.name}</li>)
-
-          }
-        </ul>  
+        <div>
+        <CountryInfo countries={countriesToShow}/>
+        </div>
+            
       </div>
     )
   }
