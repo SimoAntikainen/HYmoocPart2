@@ -190,8 +190,8 @@ class App extends React.Component {
             notes: this.state.notes.filter(n => n.id !== id)
           })
           setTimeout(() => {
-            this.setState({error: null})
-          }, 5000)
+            this.setState({ error: null })
+          }, 500)
         })
     }
   }
